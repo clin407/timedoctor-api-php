@@ -9,7 +9,8 @@
     },
     "autoload": {
         "psr-0" : {
-            "smartsites" : "src/smartsites"
+            "smartsites": "src/smartsites",
+            "Codeception\\": "src/Codeception"
         }
     },
     "require": {

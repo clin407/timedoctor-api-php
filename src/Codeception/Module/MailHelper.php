@@ -1,6 +1,6 @@
 <?php
 
-namespace smartsites\codeception\modules;
+namespace Codeception\Module;
 
 use Codeception\Module;
 use Yii;

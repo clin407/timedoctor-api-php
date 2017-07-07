@@ -1,11 +1,10 @@
 <?php
 
-namespace smartsites\codeception\modules;
+namespace Codeception\Module;
 
 use Codeception\Exception\ModuleException;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module;
-use Codeception\Module\Yii2;
 use Codeception\TestInterface;
 use PDO;
 use yii\db\Connection;
