@@ -11,7 +11,10 @@
         "psr-4" : {
             "smartsites\\": "src/smartsites",
             "Codeception\\": "src/Codeception"
-        }
+        },
+        "files": [
+            "src/smartsites/yii2/utils/cycles.php"
+        ]
     },
     "require": {
         "php": ">=5.6.0",
