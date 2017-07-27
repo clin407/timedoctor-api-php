@@ -13,7 +13,8 @@
             "Codeception\\": "src/Codeception"
         },
         "files": [
-            "src/smartsites/yii2/utils/cycles.php"
+            "src/smartsites/yii2/utils/cycles.php",
+            "src/smartsites/yii2/utils/debug.php"
         ]
     },
     "require": {
