@@ -9,16 +9,9 @@ use function Functional\map;
  * Mass editing of entities many-to-many relationship (i.e. where records are
  * linked via a table).
  *
- * <pre>
- * --------------
- * |            |
- * | Deleted    |    <-- Old children
- * | -----------+---
- * | | Updated  |  |
- * --------------  | <-- Incoming children
- *   |  Created    |
- *   ---------------
- * </pre>
+ * <i>Old children</i> = Deleted + Updated
+ *
+ * <i>Incoming children</i> = Created + Updated
  *
  * Sets of new and old records may intersect or not, and one can be a subset of
  * the other. This trait transparently supports all these cases.
@@ -37,19 +30,17 @@ use function Functional\map;
  *     Yii::$app->request->post()
  *   );
  *   $relationship->unlinkMissing();
- *   $favouriteCities = $relationship->linkNew();
- *   $relationship->linkNew($familyMembers);
- *   if (Model::validateMultiple()) {
- *     foreach ($familyMembers as $member) {
- *       $member->save();
+ *   $relationship->linkIncoming();
+ *   $favouriteCities = $relationship->getCurrentChildren();
+ *   if (Model::validateMultiple($favouriteCities)) {
+ *     foreach ($favouriteCities as $city) {
+ *       $city->save();
  *     }
+ *     $person->populateRelation('favouriteCities', $favouriteCities);
  *   }
- * } else {
- *   $favouriteCities = $person->favouriteCities;
  * }
  * $this->render('update', [
- *   'person' => $person,
- *   'favouriteCities' => $favouriteCities
+ *   'person' => $person
  * ]);
  * </pre>
  * @see http://www.yiiframework.com/doc-2.0/guide-input-tabular-input.html#combining-update-create-and-delete-on-one-page

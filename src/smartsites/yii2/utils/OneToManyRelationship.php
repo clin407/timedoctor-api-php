@@ -12,7 +12,6 @@ use function Functional\zip;
  * Mass editing of entities that have one-to-many relationship (i.e. where
  * records are linked via a field in the child record).
  *
- *
  * Usage example:
  * <pre>
  * $family = Family::findOne(['id'=>1]);
