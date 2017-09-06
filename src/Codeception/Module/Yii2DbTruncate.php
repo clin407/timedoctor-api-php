@@ -21,7 +21,11 @@ class Yii2DbTruncate extends Module implements DependsOnModule
         // Path to a php file that returns an array of the names of the
         // tables that should not be truncated. All the other tables in the
         // database will be truncated.
-        "pathToExcludes" => "config/dbTruncate/skipped-tables.php"
+        "pathToExcludes" => "config/dbTruncate/skipped-tables.php",
+        // Whether to run the cleanup before the whole suite
+        "runBeforeSuite" => false,
+        // Whether to run the cleanup before every test method in the suite
+        "runBeforeEveryTestMethod" => true
     ];
 
     /* @var Connection */
@@ -49,9 +53,17 @@ class Yii2DbTruncate extends Module implements DependsOnModule
 
     public function _before(TestInterface $test)
     {
-        $this->cleanup();
+        if ($this->config['runBeforeEveryTestMethod']) {
+            $this->cleanup();
+        }
     }
 
+    public function _beforeSuite($settings = [])
+    {
+        if ($this->config['runBeforeSuite']) {
+            $this->cleanup();
+        }
+    }
 
     protected function cleanup()
     {
