@@ -47,11 +47,6 @@ class Yii2DbTruncate extends Module implements DependsOnModule
         $this->yii = $yii2Module;
     }
 
-    public function _afterSuite()
-    {
-        $this->cleanup();
-    }
-
     public function _before(TestInterface $test)
     {
         $this->cleanup();
