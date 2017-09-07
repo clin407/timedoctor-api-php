@@ -73,6 +73,8 @@ class Yii2DbTruncate extends Module implements DependsOnModule
         if ($this->config['runBeforeSuite']) {
             $yiiConfig = require $this->pathToYiiConfigWithDbCredentials();
             $this->cleanup(
+                // $this->yii->app is empty here, unlike in _before().
+                // So we have to create the connection manually.
                 \Yii::createObject($yiiConfig['components']['db'])
             );
         }
