@@ -10,22 +10,32 @@ use PDO;
 use yii\db\Connection;
 
 /**
- * Truncates all tables in the database except for some before every test.
+ * Truncates all tables in the database except for some before every test method
+ * and/or before the whole suite.
  * @see https://dzone.com/articles/customizing-codeception This class is
  * based on that article.
  */
 class Yii2DbTruncate extends Module implements DependsOnModule
 {
+    protected $requiredFields = [
+        "pathToYiiConfigWithDbCredentials",
+        'runBeforeSuite',
+        'runBeforeEveryTestMethod'
+    ];
 
     protected $config = [
         // Path to a php file that returns an array of the names of the
         // tables that should not be truncated. All the other tables in the
         // database will be truncated.
         "pathToExcludes" => "config/dbTruncate/skipped-tables.php",
+        /**
+         * @see Yii2DbTruncate::pathToYiiConfigWithDbCredentials()
+         */
+        "pathToYiiConfigWithDbCredentials" => null,
         // Whether to run the cleanup before the whole suite
         "runBeforeSuite" => false,
         // Whether to run the cleanup before every test method in the suite
-        "runBeforeEveryTestMethod" => true
+        "runBeforeEveryTestMethod" => false
     ];
 
     /* @var Connection */
@@ -54,20 +64,23 @@ class Yii2DbTruncate extends Module implements DependsOnModule
     public function _before(TestInterface $test)
     {
         if ($this->config['runBeforeEveryTestMethod']) {
-            $this->cleanup();
+            $this->cleanup($this->yii->app->getDb());
         }
     }
 
     public function _beforeSuite($settings = [])
     {
         if ($this->config['runBeforeSuite']) {
-            $this->cleanup();
+            $yiiConfig = require $this->pathToYiiConfigWithDbCredentials();
+            $this->cleanup(
+                \Yii::createObject($yiiConfig['components']['db'])
+            );
         }
     }
 
-    protected function cleanup()
+    protected function cleanup(Connection $db)
     {
-        $this->db = $this->yii->app->getDb();
+        $this->db = $db;
         try {
             $this->disableForeignKeyChecks();
             $tablesToCleanUp = array_diff(
@@ -93,6 +106,16 @@ class Yii2DbTruncate extends Module implements DependsOnModule
     private function pathToExcludesFile()
     {
         return codecept_root_dir() . "/" . $this->config["pathToExcludes"];
+    }
+
+    /**
+     * Absolute path to a file that will, after it is required, return an array
+     * with ['components']['db'] field that can be used as a config for [[Connection]].
+     * @see Connection
+     * @return string
+     */
+    private function pathToYiiConfigWithDbCredentials() {
+        return codecept_root_dir() . "/" . $this->config["pathToYiiConfigWithDbCredentials"];
     }
 
 
