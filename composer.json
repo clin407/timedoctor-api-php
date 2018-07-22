@@ -14,7 +14,8 @@
         },
         "files": [
             "src/smartsites/yii2/utils/cycles.php",
-            "src/smartsites/yii2/utils/debug.php"
+            "src/smartsites/yii2/utils/debug.php",
+            "src/smartsites/yii2/utils/time.php"
         ]
     },
     "require": {
