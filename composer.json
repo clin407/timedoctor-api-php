@@ -1,28 +1,20 @@
 {
-    "name": "smartsites/yii2-codeception-utils",
-    "description": "Various utilities for Yii2 and Codeception",
+    "name": "smartsites/timedoctor-api-php",
+    "description": "timedoctor.com web API wrapper for PHP",
     "type": "library",
     "support": {
-        "email": "wlasowegor@gmail.com",
-        "issues": "https://github.com/smart-sites/yii2-codeception-utils/issues"
-
+        "email": "scu.dev13@gmail.com",
+        "issues": "https://github.com/smart-sites/timedoctor-api-php/issues"
     },
     "autoload": {
-        "psr-4" : {
-            "smartsites\\": "src/smartsites",
-            "Codeception\\": "src/Codeception"
-        },
-        "files": [
-            "src/smartsites/yii2/utils/cycles.php",
-            "src/smartsites/yii2/utils/debug.php",
-            "src/smartsites/yii2/utils/time.php"
-        ]
+        "psr-4": {
+            "Smartsites\\": "src/Smartsites"
+        }
     },
     "require": {
         "php": ">=5.6.0",
-        "yiisoft/yii2": "~2.0.6",
-        "codeception/codeception": "^2.2",
-        "fzaninotto/faker": "^1.6.0",
-        "lstrojny/functional-php": "^1.4"
+        "php-curl-class/php-curl-class": "^8.0",
+        "nesbot/carbon": "^2.23",
+        "lstrojny/functional-php": "^1.9"
     }
 }
