@@ -2,6 +2,8 @@
 
 namespace Smartsites\timeDoctor;
 
+use DateTimeZone;
+
 /**
  * Handles situations when TD is down.
  */
@@ -15,10 +17,11 @@ class RobustTimeDoctor extends TimeDoctor
 
     public function __construct(
         TdTokensService $tokensService,
-        TdStatusIndicator $indicator
+        TdStatusIndicator $indicator,
+        DateTimeZone $timezone
     )
     {
-        parent::__construct($tokensService);
+        parent::__construct($tokensService, $timezone);
         $this->indicator = $indicator;
     }
 
