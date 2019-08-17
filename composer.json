@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.6.0",
         "php-curl-class/php-curl-class": "^8.0",
-        "nesbot/carbon": "^2.23",
+        "nesbot/carbon": "^1.25",
         "lstrojny/functional-php": "^1.9"
     }
 }
