@@ -66,4 +66,8 @@ class TdCompany
         return $this->td->getUserProjects($this->companyId, $userId);
     }
 
+    public function getUser($userId) {
+        return $this->td->getUser($this->companyId, $userId);
+    }
+
 }
