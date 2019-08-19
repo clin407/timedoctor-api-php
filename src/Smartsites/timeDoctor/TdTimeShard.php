@@ -1,6 +1,6 @@
 <?php
 
-namespace Smartsites\tdAcBridge;
+namespace Smartsites\timeDoctor;
 
 use Carbon\Carbon;
 use DateTimeZone;

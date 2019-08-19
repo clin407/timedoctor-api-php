@@ -5,7 +5,6 @@ namespace Smartsites\timeDoctor;
 use Curl\Curl;
 use DateTimeZone;
 use ErrorException;
-use Smartsites\tdAcBridge\TdTimeShard;
 use function Functional\flat_map;
 use function Functional\map;
 
