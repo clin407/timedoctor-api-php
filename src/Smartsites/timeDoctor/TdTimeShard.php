@@ -14,13 +14,18 @@ class TdTimeShard
 {
 
     /** @var Carbon */
-    public $startTime;
+    private $startTime;
 
     /** @var string */
-    public $taskName;
+    private $taskName;
 
     /** @var string */
-    public $projectName;
+    private $projectName;
+
+    /**
+     * @var static
+     */
+    private $endTime;
 
     /** @var object */
     private $timeRecord;
@@ -35,6 +40,11 @@ class TdTimeShard
         $this->startTime = Carbon::createFromFormat(
             'Y-m-d H:i:s',
             $timeRecord->start_time,
+            $timezone
+        );
+        $this->endTime = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $timeRecord->end_time,
             $timezone
         );
         $this->taskName = html_entity_decode($timeRecord->task_name);
@@ -79,6 +89,34 @@ class TdTimeShard
     public function getTaskId()
     {
         return $this->timeRecord->task_id;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getStartTime() {
+        return $this->startTime;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getEndTime() {
+        return $this->endTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProjectName() {
+        return $this->projectName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaskName() {
+        return $this->taskName;
     }
 
 }
