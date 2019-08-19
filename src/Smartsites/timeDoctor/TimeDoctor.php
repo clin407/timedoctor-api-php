@@ -2,12 +2,12 @@
 
 namespace Smartsites\timeDoctor;
 
-use Carbon\Carbon;
 use Curl\Curl;
 use DateTimeZone;
 use ErrorException;
-use function Functional\filter;
+use Smartsites\tdAcBridge\TdTimeShard;
 use function Functional\flat_map;
+use function Functional\map;
 
 /**
  * Implements authorization flow and working with API explained in
@@ -46,7 +46,7 @@ class TimeDoctor
      * @param int[] $userIds
      * @param string $start Y-m-d
      * @param string $end Y-m-d
-     * @return object[]
+     * @return TdTimeShard[]
      */
     public function getFullWorklog($companyId, array $userIds, $start, $end)
     {
@@ -68,10 +68,15 @@ class TimeDoctor
                 $i++;
             } while ($offset < $firstPage->worklogs->count);
         }
-        return flat_map(
-            $pages,
-            function($page) {
-                return $page->worklogs->items;
+        return map(
+            flat_map(
+                $pages,
+                function($page) {
+                    return $page->worklogs->items;
+                }
+            ),
+            function($item) {
+                return new TdTimeShard($item, $this->timezone);
             }
         );
     }

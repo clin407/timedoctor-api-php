@@ -3,6 +3,7 @@
 namespace Smartsites\timeDoctor;
 
 use Carbon\Carbon;
+use Smartsites\tdAcBridge\TdTimeShard;
 use function Functional\filter;
 
 /**
@@ -27,7 +28,7 @@ class TdCompany
      * @param int[] $userIds
      * @param Carbon $start Start second
      * @param Carbon $end End second, inclusive
-     * @return object[]
+     * @return TdTimeShard[]
      */
     public function getFullWorklogForLocalTime(
         array $userIds,
@@ -54,7 +55,7 @@ class TdCompany
      * @param int[] $userIds
      * @param string $start Y-m-d
      * @param string $end Y-m-d
-     * @return object[]
+     * @return TdTimeShard[]
      */
     public function getFullWorklog(array $userIds, $start, $end)
     {
