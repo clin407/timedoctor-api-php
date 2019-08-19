@@ -3,7 +3,6 @@
 namespace Smartsites\timeDoctor;
 
 use Carbon\Carbon;
-use Smartsites\tdAcBridge\TdTimeShard;
 use function Functional\filter;
 
 /**
@@ -43,8 +42,8 @@ class TdCompany
                 $start->copy()->setTimezone($this->td->timezone)->toDateString(),
                 $end->copy()->setTimezone($this->td->timezone)->toDateString()
             ),
-            function($timeRecord) use ($end, $start) {
-                $time = Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $timeRecord->end_time, $this->td->timezone);
+            function(TdTimeShard $timeRecord) use ($end, $start) {
+                $time = $timeRecord->getEndTime();
                 return $time->greaterThanOrEqualTo($start)
                     && $time->lessThanOrEqualTo($end);
             }
