@@ -92,6 +92,14 @@ class TdTimeShard
     }
 
     /**
+     * @return int
+     */
+    public function getProjectId()
+    {
+        return $this->timeRecord->project_id;
+    }
+
+    /**
      * @return Carbon
      */
     public function getStartTime() {
