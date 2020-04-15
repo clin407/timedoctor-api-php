@@ -49,24 +49,17 @@ class TimeDoctor
      */
     public function getFullWorklog($companyId, array $userIds, $start, $end)
     {
-        $firstPage = $this->get(
-            $this->worklogUrl($companyId, $userIds, $start, $end, 0)
-        );
-        /** @var object[] $pages */
-        $pages = [];
-        $pages[] = $firstPage;
-        if ($firstPage->worklogs->count > self::$WORKLOG_REQUEST_ITEMS_LIMIT) {
-            $i = 1;
-            do {
-                $offset = self::$WORKLOG_REQUEST_ITEMS_LIMIT * $i;
-                $pages[] = $this->get(
-                    $this->worklogUrl(
-                        $companyId, $userIds, $start, $end, $offset
-                    )
-                );
-                $i++;
-            } while ($offset < $firstPage->worklogs->count);
-        }
+        $offset = 0;
+        do {
+            $page = $this->get(
+                $this->worklogUrl(
+                    $companyId, $userIds, $start, $end, $offset
+                )
+            );
+            $pages[] = $page;
+            $itemsInPage = count($page->worklogs->items);
+            $offset += $itemsInPage;
+        } while ((int)$page->worklogs->limit === $itemsInPage);
         return map(
             flat_map(
                 $pages,
